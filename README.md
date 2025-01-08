@@ -1,6 +1,6 @@
 # HTTP Socket Project using Winsock2
 
-This project implements a simple HTTP server and client using Winsock2 on Windows. Both the server and client are built using CMake, and they demonstrate basic TCP/IP communication over HTTP.
+This repository implements a simple HTTP server and client using Winsock2 on Windows. Both the server and client are built using CMake, and they demonstrate basic TCP/IP communication over HTTP.
 
 
 ## Features
