@@ -8,4 +8,4 @@ This repository implements a simple HTTP server and client using Winsock2 on Win
 - **HTTP Client**: Sends HTTP GET requests to the server and displays the response.
 - **Winsock2**: Utilizes the Windows Sockets API for network communication.
 - **CMake**: Builds the project with cross-platform compatibility in mind.
-- **Make**: Simple build automation.
+- **Makefiles**: Simple build automation.
