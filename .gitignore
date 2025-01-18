@@ -1,11 +1,3 @@
-# VSCode settings and configurations 
-.vscode/
-*.code-workspace
-
-# VSCode extensions configurations and logs
-.vscode-test/ 
-.vscode-insiders/
-
 # Vim swap files
 *.swp
 *.swo

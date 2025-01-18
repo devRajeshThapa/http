@@ -1,55 +1,65 @@
 #include <iostream>
-#include <winsock2.h>
-#pragma comment(lib, "Ws2_32.lib")
-
-const int PORT = 8080;
-const char* SERVER_IP = "127.0.0.1";
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <cstring>
+#include <cerrno> // For errno
 
 int main() {
-    WSADATA wsaData;
-    int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-    if (iResult != 0) {
-        std::cout << "WSAStartup failed: " << iResult << std::endl;
-        return 1;
-    }
+    char server_ip[16];
+    int port;
+    std::string path;
 
-    SOCKET client_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (client_fd == INVALID_SOCKET) {
-        std::cout << "Socket creation failed: " << WSAGetLastError() << std::endl;
-        WSACleanup();
-        return 1;
+    std::cout << "Enter the server IP address: ";
+    std::cin >> server_ip;
+    std::cout << "Enter the port number: ";
+    std::cin >> port;
+    std::cout << "Enter the path: ";
+    std::cin >> path;
+
+    int client_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (client_fd < 0) {
+        std::cerr << "Socket creation failed: " << strerror(errno) << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(PORT);
-    server_addr.sin_addr.s_addr = inet_addr(SERVER_IP);
-
-    if (connect(client_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == SOCKET_ERROR) {
-        std::cout << "Connect failed: " << WSAGetLastError() << std::endl;
-        closesocket(client_fd);
-        WSACleanup();
-        return 1;
+    server_addr.sin_port = htons(port);
+    if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) {
+        std::cerr << "Invalid address or address not supported\n";
+        close(client_fd);
+        exit(EXIT_FAILURE);
     }
 
-    std::cout << "Connected to server..." << std::endl;
-    const char* request = "GET / HTTP/1.1\r\n"
-                          "Host: 127.0.0.1\r\n"
-                          "Connection: close\r\n"
-                          "\r\n";
+    if (connect(client_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+        std::cerr << "Connect failed: " << strerror(errno) << std::endl;
+        close(client_fd);
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "\nX------X------X------X------X------X\n";
+    std::cout << "Connected to server at " << server_ip << " on port " << port << "...\n";
 
-    send(client_fd, request, strlen(request), 0);
-    std::cout << "Request sent to server." << std::endl;
+    std::string request = "GET " + path + " HTTP/1.1\r\n";
+    request += "Host: " + std::string(server_ip) + "\r\n";
+    request += "Connection: close\r\n\r\n";
+
+    send(client_fd, request.c_str(), request.length(), 0);
+    std::cout << "Request sent to server.\n";
 
     char buffer[4096] = {0};
     int bytes_received = recv(client_fd, buffer, sizeof(buffer), 0);
     if (bytes_received > 0) {
-        std::cout << "Received from server: " << buffer << std::endl;
+        std::cout << "\nReceived from server: \n" << buffer << std::endl;
+        std::cout << "X------X------X------X------X------X\n\n";
     } else {
-        std::cout << "recv failed: " << WSAGetLastError() << std::endl;
+        std::cerr << "recv failed: " << strerror(errno) << std::endl;
+        std::cout << "X------X------X------X------X------X\n\n";
     }
 
-    closesocket(client_fd);
-    WSACleanup();
+    close(client_fd);
     return 0;
 }
+

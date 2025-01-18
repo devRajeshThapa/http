@@ -1,13 +1,16 @@
 #!/bin/bash
 
-# Remove build directory if it exists
 if [ -d "build" ]; then
-    rm -rf build
-    echo "Removed existing build directory."
+    echo
+    echo "Found build directory. Deleting..."
+    rm -r "build"
+    echo "build directory deleted."
 fi
 
-# Remove dist directory if it exists
 if [ -d "dist" ]; then
-    rm -rf dist
-    echo "Removed existing dist directory."
+    echo
+    echo "Found dist directory. Deleting..."
+    rm -r "dist"
+    echo "dist directory deleted."
+    echo
 fi
