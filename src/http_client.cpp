@@ -29,7 +29,7 @@ int main() {
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) {
-        std::cerr << "Invalid address or address not supported\n";
+        std::cerr << "Invalid address or address not supported: " << strerror(errno) << std::endl;
         close(client_fd);
         exit(EXIT_FAILURE);
     }
@@ -39,12 +39,15 @@ int main() {
         close(client_fd);
         exit(EXIT_FAILURE);
     }
+
     std::cout << "\nX------X------X------X------X------X\n";
     std::cout << "Connected to server at " << server_ip << " on port " << port << "...\n";
 
     std::string request = "GET " + path + " HTTP/1.1\r\n";
     request += "Host: " + std::string(server_ip) + "\r\n";
     request += "Connection: close\r\n\r\n";
+
+    std::cout << "\nHTTP Request:\n" << request << std::endl;
 
     send(client_fd, request.c_str(), request.length(), 0);
     std::cout << "Request sent to server.\n";
