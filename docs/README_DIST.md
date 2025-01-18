@@ -9,6 +9,13 @@ This repository contains a simple implementation of an HTTP client and server, s
 - **HTTP Server**: Listens on a specified port and handles HTTP GET requests; responds with either a "200 OK" or "404 Not Found" message.
 - **HTTP Client**: Connects to the server, sends an HTTP GET request, and displays the server's response.
 
+## Platforms 
+
+This project is compatible with the following platforms: 
+- **Linux**
+- **macOS**
+- **Windows Subsystem for Linux (WSL)**
+
 ## Running the Server
 
 1. Navigate to the `[APPLICATION_FOLDER]/bin` directory.
