@@ -9,6 +9,13 @@ This repository contains a simple implementation of an HTTP client and server, s
 - **HTTP Server**: Listens on a specified port and handles HTTP GET requests; responds with either a "200 OK" or "404 Not Found" message.
 - **HTTP Client**: Connects to the server, sends an HTTP GET request, and displays the server's response.
 
+## Prerequisites
+
+Make sure you have the following installed:
+
+- **CMake**: Version 3.28.3 or above
+- **g++**: A C++ compiler
+
 ## Cloning the Repository
 
 To get started with the project, clone the repository using the following command:
@@ -20,7 +27,7 @@ cd http
 
 ## Building the Project
 
-Use CMake to build the project. Ensure you have CMake version 3.28.3 or above installed.
+Use CMake to build the project. This will create the executables in the `dist/bin` directory:
 
 ```sh
 cmake ..
