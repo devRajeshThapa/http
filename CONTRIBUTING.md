@@ -22,7 +22,7 @@ To contribute code changes, please follow these steps:
    
 2. **Clone your fork**: 
    ```sh
-   git clone https://github.com/your-username/http.git
+   git clone https://github.com/devRajeshTHapa/http.git
    cd http
    ```
 
