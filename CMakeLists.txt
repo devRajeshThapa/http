@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28.3)
 
-project(socket LANGUAGES C CXX)
+project(http LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
