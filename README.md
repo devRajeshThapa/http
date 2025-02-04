@@ -76,7 +76,7 @@ Enter the path: <path>
 Once the server is running, you can access it from a web browser by entering the following URL:
 
 ```
-http://<server_ip>:<port_number>
+http://<server_ip>:<port_number><path>
 ```
 
 Replace `<server_ip>` with the IP address of the server (e.g., `127.0.0.1` if running locally) and `<port_number>` with the port number you specified.
